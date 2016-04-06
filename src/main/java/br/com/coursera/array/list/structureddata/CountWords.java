@@ -7,7 +7,7 @@ public class CountWords {
 	}
 
 	public static void countWordLengths(int[] counts) {
-		String[] words = { "bell,", "marca", "bugs", "pedala", ".peda"};
+		String[] words = { "!-Check-!", "marca", "bugs", "pedala", ".peda", "!-Check-!"};
 		for (String s : words) {
 			
 			String checkedWord = checkWord(s);
@@ -32,7 +32,7 @@ public class CountWords {
 			counts[wordSize] += 1;
 		}
 		if (wordSize >= counts.length) {
-			counts[wordSize - 1] +=1;  
+			counts[counts.length - 1] +=1;  
 		}
 		return counts;
 	}
