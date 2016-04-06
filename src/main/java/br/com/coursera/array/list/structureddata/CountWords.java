@@ -11,14 +11,7 @@ public class CountWords {
 		for (String s : words) {
 			
 			String checkedWord = checkWord(s);
-			int wordSize = checkedWord.length();
-			
-			if (wordSize < counts.length) {
-				counts[wordSize] += 1;
-			}
-			if (wordSize >= counts.length) {
-				counts[wordSize - 1] +=1;  
-			}
+			countLength(counts, checkedWord);
 		}
 		for (int i = 0; i < counts.length; i++) {
 			if (counts.length - 1 == i) {
@@ -27,7 +20,21 @@ public class CountWords {
 				System.out.println("\t Quantidade de palavras com tamanho " + i + ": " + counts[i]);
 			}
 		}
+		int lengthMostCommon = indexOfMax(counts);
+		System.out.println("\t Quantidade de vezes da palavra que mais se repete no texto:" + lengthMostCommon);
 
+	}
+
+	private static int[] countLength(int[] counts, String checkedWord) {
+		int wordSize = checkedWord.length();
+		
+		if (wordSize < counts.length) {
+			counts[wordSize] += 1;
+		}
+		if (wordSize >= counts.length) {
+			counts[wordSize - 1] +=1;  
+		}
+		return counts;
 	}
 
 	private static String checkWord(String s) {
@@ -56,6 +63,16 @@ public class CountWords {
 	
 	private static boolean lastCharIsALetter(String s) {
 		return Character.isLetter(s.charAt(s.length() - 1));
+	}
+	
+	private static int indexOfMax(int[] lengths) {
+		int maxValue = 0;
+		for (int i = 0; i < lengths.length; i++) {
+			if (lengths[i] > maxValue) {
+				maxValue = lengths[i];
+			}
+		}
+		return maxValue;
 	}
 
 }
