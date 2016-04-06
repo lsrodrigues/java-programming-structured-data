@@ -1,0 +1,7 @@
+target/
+bin/
+.classpath
+.project
+.settings
+.metadata
+/build/classes/br/com/coursera/array/list/structureddata/*.class
