@@ -1,17 +1,44 @@
 package br.com.coursera.array.list.structureddata;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class CountWords {
 
-	public static void main(String[] args) {
-		countWordLengths(new int[6]);
+	public static void main(String[] args) throws IOException {
+		countWordLengths(new int[20]);
 	}
 
-	public static void countWordLengths(int[] counts) {
-		String[] words = { "!-Check-!", "marca", "bugs", "pedala", ".peda", "!-Check-!"};
+	public static void countWordLengths(int[] counts) throws IOException {
+		 String[] words = new String[10000000] ;
+		 File texto = new File ("C:/Temp/manywords.txt");
+		 FileReader fr = new FileReader( texto );
+         BufferedReader br = new BufferedReader(fr);
+         int index = 0;
+         while(br.ready()){
+             String linha = br.readLine();
+             
+             String []word = linha.split(" ");
+             for (int i = 0; i < word.length; i++) {
+            	 words[index] = word[i];
+            	 index++;
+			}
+         }
+		
+//		String[] words = { "!-Check-!", "marca", "bugs", "pedala", ".peda", "!-Check-!"};
 		for (String s : words) {
+			System.out.println(s);
+			if (s == null) {
+				break;
+			}
+			if (!s.isEmpty() && !(s.length() == 1 &&  !Character.isLetter(s.charAt(0)))) {
+				String checkedWord = checkWord(s);
+				countLength(counts, checkedWord);
+			}
 			
-			String checkedWord = checkWord(s);
-			countLength(counts, checkedWord);
 		}
 		for (int i = 0; i < counts.length; i++) {
 			if (counts.length - 1 == i) {
@@ -39,6 +66,7 @@ public class CountWords {
 
 	private static String checkWord(String s) {
 		String correctlyWord = null;
+		
 		if (!firstCharIsALetter(s)) {
 			correctlyWord = s.substring(1);
 		}
@@ -53,7 +81,6 @@ public class CountWords {
 		if (correctlyWord == null) {
 			return s;
 		}
-		
 		return correctlyWord;
 	}
 
