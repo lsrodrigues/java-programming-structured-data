@@ -2,18 +2,24 @@ package br.com.coursera.array.list.structureddata;
 
 public class CaesarCipher {
 
-	public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static String shiftedAlphabet;
+	private static int mainKey;
 
 	public static void main(String[] args) {
 		String input = "First Legion";
 		System.out.println(encrypt(input, 23));
 		System.out.println(encryptTwoKeys(input, 23, 17));
 	}
-
-	public static String encrypt(String input, int key) {
+	
+	public CaesarCipher(int key){
+		shiftedAlphabet = generateShiftedAlphabet(key, ALPHABET);
+		mainKey = key;
+	}
+	
+	public String encrypt(String input) {
 		StringBuilder builder = new StringBuilder();
 		String alphabet = CaesarCipher.ALPHABET;
-		String shiftedAlphabet = generateShiftedAlphabet(key, alphabet);
 		for (int i = 0; i < input.length(); i++) {
 
 			Character c = (char) (input.charAt(i));
@@ -21,6 +27,24 @@ public class CaesarCipher {
 			builder.append(shiftedChar);
 		}
 		return builder.toString();
+	}
+
+	public static String encrypt(String input, int key) {
+		StringBuilder builder = new StringBuilder();
+		String alphabet = CaesarCipher.ALPHABET;
+		shiftedAlphabet = generateShiftedAlphabet(key, alphabet);
+		for (int i = 0; i < input.length(); i++) {
+
+			Character c = (char) (input.charAt(i));
+			char shiftedChar = cipherChar(alphabet, shiftedAlphabet, c);
+			builder.append(shiftedChar);
+		}
+		return builder.toString();
+	}
+	
+	public static String decrypt(String input){
+		CaesarCipher breaker = new CaesarCipher(26 - mainKey);
+		return breaker.encrypt(input);
 	}
 
 	private static String generateShiftedAlphabet(int key, String alphabet) {
