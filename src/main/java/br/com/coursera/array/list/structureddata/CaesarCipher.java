@@ -2,6 +2,8 @@ package br.com.coursera.array.list.structureddata;
 
 public class CaesarCipher {
 
+	public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 	public static void main(String[] args) {
 		String input = "First Legion";
 		System.out.println(encrypt(input, 23));
@@ -10,7 +12,7 @@ public class CaesarCipher {
 
 	public static String encrypt(String input, int key) {
 		StringBuilder builder = new StringBuilder();
-		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String alphabet = CaesarCipher.ALPHABET;
 		String shiftedAlphabet = generateShiftedAlphabet(key, alphabet);
 		for (int i = 0; i < input.length(); i++) {
 
@@ -43,7 +45,7 @@ public class CaesarCipher {
 	public static String encryptTwoKeys(String input, int key1, int key2){
 		StringBuilder builder = new StringBuilder();
 		Character ch = ' ';
-		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String alphabet = CaesarCipher.ALPHABET;
 		String shiftedAlphabet1 = generateShiftedAlphabet(key1, alphabet);
 		String shiftedAlphabet2 = generateShiftedAlphabet(key2, alphabet);
 		for (int i = 0; i < input.length(); i++) {
@@ -63,19 +65,4 @@ public class CaesarCipher {
 	private static boolean isALetterOfAlphabet(String alphabet, Character c) {
 		return alphabet.contains(String.valueOf(Character.toUpperCase(c)));
 	}
-	
-//	public void testCaesar(){
-//		 try{
-//	         BufferedReader br = new BufferedReader(new FileReader("c:/arquivo.html"));
-//	         while(br.ready()){
-//	            String linha = br.readLine();
-////	            System.out.println(linha);
-//	         }
-//	         br.close();
-//	      }catch(IOException ioe){
-//	         ioe.printStackTrace();
-//	      }
-//		String encrypted = encrypt(message, key);
-//		System.out.println("key is " + key + "\n" + encrypted);
-//	}
 }
