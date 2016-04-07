@@ -7,14 +7,22 @@ public class CaesarCipher {
 	private static int mainKey;
 
 	public static void main(String[] args) {
-		String input = "First Legion";
-		System.out.println(encrypt(input, 23));
-		System.out.println(encryptTwoKeys(input, 23, 17));
+		String input = "Can you imagine life WITHOUT the internet AND computers in your pocket?";
+		CaesarCipher cipher = new CaesarCipher(15);
+//		System.out.println(cipher.encrypt(input));
+		
+		CaesarCipherTwo cipherTwo = new CaesarCipherTwo(21, 8);
+		System.out.println(cipherTwo.encrypt(input));
 	}
 	
 	public CaesarCipher(int key){
 		shiftedAlphabet = generateShiftedAlphabet(key, ALPHABET);
 		mainKey = key;
+	}
+	
+	public static String decrypt(String input){
+		CaesarCipher breaker = new CaesarCipher(26 - mainKey);
+		return breaker.encrypt(input);
 	}
 	
 	public String encrypt(String input) {
@@ -28,32 +36,8 @@ public class CaesarCipher {
 		}
 		return builder.toString();
 	}
-
-	public static String encrypt(String input, int key) {
-		StringBuilder builder = new StringBuilder();
-		String alphabet = CaesarCipher.ALPHABET;
-		shiftedAlphabet = generateShiftedAlphabet(key, alphabet);
-		for (int i = 0; i < input.length(); i++) {
-
-			Character c = (char) (input.charAt(i));
-			char shiftedChar = cipherChar(alphabet, shiftedAlphabet, c);
-			builder.append(shiftedChar);
-		}
-		return builder.toString();
-	}
 	
-	public static String decrypt(String input){
-		CaesarCipher breaker = new CaesarCipher(26 - mainKey);
-		return breaker.encrypt(input);
-	}
-
-	private static String generateShiftedAlphabet(int key, String alphabet) {
-		String shiftedAlphabet = alphabet.substring(key);
-		shiftedAlphabet += alphabet.subSequence(0, key);
-		return shiftedAlphabet;
-	}
-
-	private static char cipherChar(String alphabet, String shiftedAlphabet,
+	public static char cipherChar(String alphabet, String shiftedAlphabet,
 			Character c) {
 		if (!isALetterOfAlphabet(alphabet, c)) {
 			return c;
@@ -66,7 +50,17 @@ public class CaesarCipher {
 		return shiftedChar;
 	}
 	
-	public static String encryptTwoKeys(String input, int key1, int key2){
+	private static boolean isALetterOfAlphabet(String alphabet, Character c) {
+		return alphabet.contains(String.valueOf(Character.toUpperCase(c)));
+	}
+
+	public static String generateShiftedAlphabet(int key, String alphabet) {
+		String shiftedAlphabet = alphabet.substring(key);
+		shiftedAlphabet += alphabet.subSequence(0, key);
+		return shiftedAlphabet;
+	}
+	
+	private static String encryptTwoKeys(String input, int key1, int key2){
 		StringBuilder builder = new StringBuilder();
 		Character ch = ' ';
 		String alphabet = CaesarCipher.ALPHABET;
@@ -85,8 +79,17 @@ public class CaesarCipher {
 		return builder.toString();
 		
 	}
-
-	private static boolean isALetterOfAlphabet(String alphabet, Character c) {
-		return alphabet.contains(String.valueOf(Character.toUpperCase(c)));
-	}
+	
+//	public static String encrypt(String input, int key) {
+//		StringBuilder builder = new StringBuilder();
+//		String alphabet = CaesarCipher.ALPHABET;
+//		shiftedAlphabet = generateShiftedAlphabet(key, alphabet);
+//		for (int i = 0; i < input.length(); i++) {
+//
+//			Character c = (char) (input.charAt(i));
+//			char shiftedChar = cipherChar(alphabet, shiftedAlphabet, c);
+//			builder.append(shiftedChar);
+//		}
+//		return builder.toString();
+//	}
 }
