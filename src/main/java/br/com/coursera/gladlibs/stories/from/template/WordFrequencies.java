@@ -38,13 +38,11 @@ public class WordFrequencies {
 	public void findUnique() {
 		myWords.clear();
 		myFreqs.clear();
-		FileResource file = new FileResource("C:/Temp/romeo.txt");
-		// String [] file = {"This", "is", "a", "test.", "Yes", "a", "test",
-		// "of", "a", "test.", "Test."};
+		FileResource file = new FileResource("C:/Temp/likeit.txt");
 		for (String word : file.words()) {
 			int index = myWords.indexOf(word.toLowerCase());
 			if (index == -1) {
-				myWords.add(word);
+				myWords.add(word.toLowerCase());
 				myFreqs.add(1);
 			} else {
 				int value = myFreqs.get(index);
