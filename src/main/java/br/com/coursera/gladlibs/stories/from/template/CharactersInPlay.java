@@ -1,6 +1,8 @@
 package br.com.coursera.gladlibs.stories.from.template;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import edu.duke.FileResource;
 
@@ -11,12 +13,14 @@ public class CharactersInPlay {
 
 	public static void main(String[] args) {
 		CharactersInPlay chars = new CharactersInPlay();
-		FileResource file = new FileResource("C:/Temp/macbethSmall.txt");
+		FileResource file = new FileResource("C:/Temp/likeit.txt");
 		chars.findAllCharacters(file);
 		chars.myWords.forEach(s -> {
 			System.out.println("\n" + s + "\t"
 					+ getFreqIndex(chars.myFreqs, chars.myWords, s));
 		});
+		System.out.println("--------------------------------------------");
+		chars.charactersWithNumParts(10, 15);
 
 	}
 
@@ -45,10 +49,22 @@ public class CharactersInPlay {
 		for (String word : file.lines()) {
 			if (word.contains(".")) {
 				String words = word.substring(0, word.indexOf("."));
-				String period = String.join("", words);
-				update(period);
+//				String period = String.join("", words);
+				update(words);
 			}
 		}
+	}
+
+	private void charactersWithNumParts(int num1, int num2) {
+		if (num1 < num2) {
+			List<Integer> index = myFreqs.stream()
+					.filter(freqIndex -> freqIndex >= num1 && freqIndex <= num2)
+					.mapToInt(freqIndex -> myFreqs.indexOf(freqIndex)).boxed()
+					.collect(Collectors.toList());
+			index.forEach(i -> System.out.println("\n" + myWords.get(i) + "\t"
+					+ getFreqIndex(myFreqs, myWords, myWords.get(i))));
+		}
+
 	}
 
 }
